@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { ChangeEvent } from "react";
 import "../Input/Input.scss";
 
 type Props = {
@@ -6,7 +6,7 @@ type Props = {
   name: string;
   type?: string;
   value: any;
-  onChange: any;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void; // Додано тип для onChange
 };
 
 const Input: React.FC<Props> = ({
@@ -14,14 +14,16 @@ const Input: React.FC<Props> = ({
   placeholder,
   name,
   value,
+  onChange, // Додано onChange з властивостей
 }) => {
   return (
     <input
-      type="text"
+      type={type}
       placeholder={placeholder}
       name={name}
       value={value}
       className="input-field"
+      onChange={onChange} // Передано onChange до події onChange у <input>
     />
   );
 };

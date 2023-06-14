@@ -1,13 +1,29 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import "../Select/Select.scss";
-import currency from "../../../utils/currency";
 
-const Select: React.FC = () => {
+type Props = {
+  value: string;
+  onChange: (selectedValue: string) => void;
+  options: string[];
+};
+
+const Select: React.FC<Props> = ({ value, onChange, options }) => {
+  const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = e.target.value;
+    onChange(selectedValue);
+  };
+
   return (
-    <select className="select-field">
-      <option value="USD">USD</option>
-      <option value="EUR">EUR</option>
-      <option value="UAH">UAH</option>
+    <select
+      className="select-field"
+      value={value}
+      onChange={handleSelectChange}
+    >
+      {options.map((option) => (
+        <option key={option} value={option}>
+          {option}
+        </option>
+      ))}
     </select>
   );
 };

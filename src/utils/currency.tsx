@@ -1,3 +1,3 @@
-const currency = (value) => {};
+const currency = () => {};
 
 export default currency;
