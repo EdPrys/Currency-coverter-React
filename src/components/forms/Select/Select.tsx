@@ -1,24 +1,15 @@
 import React, { ChangeEvent } from "react";
-import "../Select/Select.scss";
+import styles from "./Select.module.scss";
 
 type Props = {
   value: string;
-  onChange: (selectedValue: string) => void;
+  onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   options: string[];
 };
 
 const Select: React.FC<Props> = ({ value, onChange, options }) => {
-  const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const selectedValue = e.target.value;
-    onChange(selectedValue);
-  };
-
   return (
-    <select
-      className="select-field"
-      value={value}
-      onChange={handleSelectChange}
-    >
+    <select className={styles.selectField} value={value} onChange={onChange}>
       {options.map((option) => (
         <option key={option} value={option}>
           {option}

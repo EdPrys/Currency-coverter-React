@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./Header.scss";
+import styles from "./Header.module.scss";
 
 const Header: React.FC = () => {
   const [usdRate, setUsdRate] = useState(null);
@@ -29,7 +29,7 @@ const Header: React.FC = () => {
 
   return (
     <header>
-      <div className="currencyMarquee">
+      <div className={styles.currencyMarquee}>
         <p>
           Курс USD: {usdRate}
           {"  "}
