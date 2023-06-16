@@ -46,8 +46,4 @@ export const currency = async ({ input, selects }: Props): Promise<string> => {
       throw error;
     }
   }
-  // input === ""?"":
-  const convertedValue = parseFloat(input);
-  // console.log(selects[0] + " " + selects[1]);
-  return parseFloat(convertedValue.toFixed(2)).toString();
 };
