@@ -1,12 +1,9 @@
-import React, { ChangeEvent } from "react";
+import React from "react";
+
 import styles from "./Input.module.scss";
 
-type Props = {
-  placeholder: string;
-  name: string;
-  type?: string;
-  value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void; // TODO: add to onChange options
+type Props = React.InputHTMLAttributes<HTMLInputElement> & {
+  // Add custom types
 };
 
 const Input: React.FC<Props> = ({
@@ -15,6 +12,7 @@ const Input: React.FC<Props> = ({
   name,
   value,
   onChange,
+  ...rest
 }) => {
   return (
     <input
@@ -24,6 +22,7 @@ const Input: React.FC<Props> = ({
       value={value}
       className={styles.inputField}
       onChange={onChange}
+      {...rest}
     />
   );
 };
