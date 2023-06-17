@@ -18,8 +18,8 @@ const Body: React.FC = () => {
       input: inputValue,
       selects: [selectedOption1, selectedOption2],
     });
-    setInputValue2(convertedValue); // TODO: set converted value in - setInputValue2
-    setInputValue1(inputValue); // TODO: copy velue in setInputValue1
+    setInputValue2(convertedValue); // TODO: set converted value in - setInputValue1
+    setInputValue1(inputValue); // TODO: copy velue in setInputValue2
     currency({
       input: inputValue,
       selects: [selectedOption1, selectedOption2],
@@ -32,8 +32,8 @@ const Body: React.FC = () => {
       input: inputValue,
       selects: [selectedOption1, selectedOption2],
     });
-    setInputValue1(convertedValue); // TODO: set converted value in - setInputValue1
-    setInputValue2(inputValue); // TODO: copy velue in setInputValue2
+    setInputValue1(convertedValue); // TODO: set converted value in - setInputValue2
+    setInputValue2(inputValue); // TODO: copy velue in setInputValue1
   };
 
   const handleSelectChange1 = (e: ChangeEvent<HTMLSelectElement>) => {
