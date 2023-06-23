@@ -1,16 +1,18 @@
 import React, { ChangeEvent, useState } from "react";
+
 import Input from "../forms/Input/Input";
 import Select from "../forms/Select/Select";
 import { currency } from "../../utils/currency";
+
 import styles from "./Body.module.scss";
 
-const OPTIONS_SELECTED = ["USD", "UAH", "EUR"];
+const CURRENCY_OPTIONS = ["USD", "UAH", "EUR"];
 
 const Body: React.FC = () => {
   const [inputValue1, setInputValue1] = useState("");
   const [inputValue2, setInputValue2] = useState("");
-  const [selectedOption1, setSelectedOption1] = useState(OPTIONS_SELECTED[0]);
-  const [selectedOption2, setSelectedOption2] = useState(OPTIONS_SELECTED[0]);
+  const [selectedOption1, setSelectedOption1] = useState(CURRENCY_OPTIONS[0]);
+  const [selectedOption2, setSelectedOption2] = useState(CURRENCY_OPTIONS[0]);
 
   const handleInputChange1 = async (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
@@ -18,8 +20,8 @@ const Body: React.FC = () => {
       input: inputValue,
       selects: [selectedOption1, selectedOption2],
     });
-    setInputValue2(convertedValue); // TODO: set converted value in - setInputValue2
-    setInputValue1(inputValue); // TODO: copy velue in setInputValue1
+    setInputValue2(convertedValue); // set converted value in - setInputValue2
+    setInputValue1(inputValue); // copy value in setInputValue1
     currency({
       input: inputValue,
       selects: [selectedOption1, selectedOption2],
@@ -30,10 +32,10 @@ const Body: React.FC = () => {
     const inputValue = e.target.value;
     const convertedValue = await currency({
       input: inputValue,
-      selects: [selectedOption1, selectedOption2],
+      selects: [selectedOption2, selectedOption1],
     });
-    setInputValue1(convertedValue); // TODO: set converted value in - setInputValue1
-    setInputValue2(inputValue); // TODO: copy velue in setInputValue2
+    setInputValue1(convertedValue); // set converted value in - setInputValue1
+    setInputValue2(inputValue); // copy value in setInputValue2
   };
 
   const handleSelectChange1 = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -57,9 +59,10 @@ const Body: React.FC = () => {
         onChange={handleInputChange1}
       />
       <Select
+        name="select1"
         value={selectedOption1}
         onChange={handleSelectChange1}
-        options={OPTIONS_SELECTED}
+        options={CURRENCY_OPTIONS}
       />
       <Input
         name="input2"
@@ -68,9 +71,10 @@ const Body: React.FC = () => {
         onChange={handleInputChange2}
       />
       <Select
+        name="select2"
         value={selectedOption2}
         onChange={handleSelectChange2}
-        options={OPTIONS_SELECTED}
+        options={CURRENCY_OPTIONS}
       />
     </div>
   );

@@ -1,49 +1,57 @@
-const API =
-  "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchangenew?json";
+import { fetchCurrencyRates } from "./services";
 
 type Props = {
   input: string;
-  selects: any;
+  selects: string[];
 };
+
+type RateType = {
+  cc: string;
+};
+
 export const currency = async ({ input, selects }: Props): Promise<string> => {
+  const data = await fetchCurrencyRates();
+  const euroRate = data.find((item: RateType) => item.cc === "EUR")?.rate;
+  const usdRate = data.find((item: RateType) => item.cc === "USD")?.rate;
   const [first, second] = selects;
-  // convertation
+
   if (input === "") {
     return "";
-  } else if (first === second) {
-    return input;
-  } else {
-    try {
-      const response = await fetch(API);
-      const data = await response.json();
-
-      const euroRate = data.find((item: any) => item.cc === "EUR")?.rate;
-      const usdRate = data.find((item: any) => item.cc === "USD")?.rate;
-
-      if (first === "USD" && second === "UAH") {
-        const res = parseFloat(input) * usdRate; //TODO:USD -> UAH
-        return res.toFixed(2).toString();
-      } else if (first === "USD" && second === "EUR") {
-        const res = (parseFloat(input) * usdRate) / euroRate; //TODO:USD -> EUR
-        return res.toFixed(2).toString();
-      } else if (first === "EUR" && second === "UAH") {
-        const res = parseFloat(input) * euroRate; //TODO:EUR -> UAH
-        return res.toFixed(2).toString();
-      } else if (first === "EUR" && second === "USD") {
-        const res = (parseFloat(input) * euroRate) / usdRate; //TODO:EUR -> USD
-        return res.toFixed(2).toString();
-      } else if (first === "UAH" && second === "USD") {
-        const res = parseFloat(input) / usdRate; //TODO:UAH -> USD
-        return res.toFixed(2).toString();
-      } else if (first === "UAH" && second === "EUR") {
-        const res = parseFloat(input) / euroRate; //TODO:UAH -> EUR
-        return res.toFixed(2).toString();
-      } else {
-        throw new Error("Failed to retrieve exchange rates");
-      }
-    } catch (error) {
-      console.error("Currency conversion error:", error);
-      throw error;
-    }
   }
+
+  if (first === second) {
+    return input;
+  }
+
+  if (first === "USD" && second === "UAH") {
+    const res = parseFloat(input) * usdRate; // USD -> UAH
+    return res.toFixed(2).toString();
+  }
+
+  if (first === "USD" && second === "EUR") {
+    const res = (parseFloat(input) * usdRate) / euroRate; // USD -> EUR
+    return res.toFixed(2).toString();
+  }
+  if (first === "EUR" && second === "UAH") {
+    const res = parseFloat(input) * euroRate; // EUR -> UAH
+    return res.toFixed(2).toString();
+  }
+  if (first === "EUR" && second === "USD") {
+    const res = (parseFloat(input) * euroRate) / usdRate; // EUR -> USD
+    return res.toFixed(2).toString();
+  }
+
+  if (first === "UAH" && second === "USD") {
+    const res = parseFloat(input) / usdRate; // UAH -> USD
+    return res.toFixed(2).toString();
+  }
+
+  if (first === "UAH" && second === "EUR") {
+    const res = parseFloat(input) / euroRate; // UAH -> EUR
+    return res.toFixed(2).toString();
+  }
+
+  return "";
+
+  // throw new Error("Failed to retrieve exchange rates"); // FIXME: I'm not sure, we should trow an error. Maybe we can use console.log istead. WDYT?
 };
