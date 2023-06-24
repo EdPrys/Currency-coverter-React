@@ -1,36 +1,29 @@
-import React, { useState, ChangeEvent } from "react";
-import "../Input/Input.scss";
+import React from "react";
 
-const Input: React.FC = () => {
-  const [inputValue, setInputValue] = useState("");
-  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+import styles from "./Input.module.scss";
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
+type Props = React.InputHTMLAttributes<HTMLInputElement> & {
+  // Add custom types
+};
 
-  const handleCurrencyChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCurrency(e.target.value);
-  };
-
+const Input: React.FC<Props> = ({
+  type = "text",
+  placeholder,
+  name,
+  value,
+  onChange,
+  ...rest
+}) => {
   return (
-    <div className="input-block">
-      <input
-        type="text"
-        value={inputValue}
-        onChange={handleInputChange}
-        className="input-field"
-      />
-      <select
-        value={selectedCurrency}
-        onChange={handleCurrencyChange}
-        className="select-field"
-      >
-        <option value="USD">USD</option>
-        <option value="EUR">EUR</option>
-        <option value="UAH">UAH</option>
-      </select>
-    </div>
+    <input
+      type={type}
+      placeholder={placeholder}
+      name={name}
+      value={value}
+      className={styles.inputField}
+      onChange={onChange}
+      {...rest}
+    />
   );
 };
 

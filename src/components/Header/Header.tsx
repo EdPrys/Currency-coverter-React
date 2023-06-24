@@ -1,27 +1,23 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./Header.scss";
+
+import styles from "./Header.module.scss";
+import { fetchCurrencyRates } from "../../utils/services";
 
 const Header: React.FC = () => {
-  const [usdRate, setUsdRate] = useState(null);
-  const [eurRate, setEurRate] = useState(null);
+  const [usdRate, setUsdRate] = useState("");
+  const [eurRate, setEurRate] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchangenew?json"
-        );
-        const data = response.data;
+      const data = await fetchCurrencyRates();
 
-        const usdData = data.find((item: { cc: string }) => item.cc === "USD");
-        const eurData = data.find((item: { cc: string }) => item.cc === "EUR");
+      // Pick USD rate from currency rate API
+      const usdData = data.find((item: { cc: string }) => item.cc === "USD");
+      const eurData = data.find((item: { cc: string }) => item.cc === "EUR");
 
-        setUsdRate(usdData.rate);
-        setEurRate(eurData.rate);
-      } catch (error) {
-        console.log("Error:", error);
-      }
+      setUsdRate(usdData.rate);
+      setEurRate(eurData.rate);
     };
 
     fetchData();
@@ -29,7 +25,7 @@ const Header: React.FC = () => {
 
   return (
     <header>
-      <div className="currencyMarquee">
+      <div className={styles.currencyMarquee}>
         <p>
           Курс USD: {usdRate}
           {"  "}
